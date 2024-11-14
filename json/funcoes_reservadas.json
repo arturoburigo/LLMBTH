@@ -1,0 +1,1051 @@
+{
+    "funcoes_reservadas": {
+        "AdicionaisTempoServico": {
+            "nome": "AdicionaisTempoServico",
+            "metodos": {
+                "busca": {
+                    "descricao": "Busca no sistema RH a quantidade (em valor ou percentual) de adicionais adquiridos conforme a classificação de adicional",
+                    "parametros": [
+                        {
+                            "nome": "tipoAdicional",
+                            "tipo": "TipoAdicionalEnum",
+                            "obrigatorio": true,
+                            "descricao": "Tipo do adicional (QUANTIDADE_ADICIONAIS ou PERCENTUAL_TEMPO_SERVICO)"
+                        },
+                        {
+                            "nome": "classificacaoAdicional",
+                            "tipo": "ClassificacaoAdicionalEnum",
+                            "obrigatorio": true,
+                            "descricao": "Classificação do adicional (ANUENIO, BIENIO, etc)"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Quantidade ou percentual do adicional"
+                    },
+                    "exemplo": {
+                        "codigo": "valorReferencia = AdicionaisTempoServico.busca(TipoAdicional.QUANTIDADE_ADICIONAIS, ClassificacaoAdicional.ANUENIO)",
+                        "explicacao": "Busca a quantidade de anuênios do funcionário"
+                    }
+                }
+            }
+        },
+        "Afastamentos": {
+            "nome": "Afastamentos",
+            "metodos": {
+                "buscaPorFaltas": {
+                    "descricao": "Permite buscar os afastamentos do tipo 'Faltas' de uma matrícula",
+                    "parametros": [
+                        {
+                            "nome": "abono/falta",
+                            "tipo": "AbonoFalta",
+                            "obrigatorio": true,
+                            "descricao": "Se vai buscar abono ou falta"
+                        },
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "obrigatorio": true,
+                            "descricao": "Competência para busca"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de afastamentos encontrados"
+                    },
+                    "exemplo": {
+                        "codigo": "def faltas = Afastamentos.buscaPorFaltas(AbonoFalta.FALTA, calculo.competencia)",
+                        "explicacao": "Busca as faltas na competência atual"
+                    }
+                },
+                "buscaPorPeriodo": {
+                    "descricao": "Permite buscar os afastamentos de uma matrícula em um período",
+                    "parametros": [
+                        {
+                            "nome": "dataInicial",
+                            "tipo": "Date",
+                            "obrigatorio": false,
+                            "descricao": "Data inicial para busca"
+                        },
+                        {
+                            "nome": "dataFinal",
+                            "tipo": "Date",
+                            "obrigatorio": false,
+                            "descricao": "Data final para busca"
+                        },
+                        {
+                            "nome": "classificacoes",
+                            "tipo": "List<ClassificacaoTipoAfastamento>",
+                            "obrigatorio": true,
+                            "descricao": "Lista de classificações de afastamento"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de afastamentos encontrados"
+                    },
+                    "exemplo": {
+                        "codigo": "Afastamentos.buscaPorPeriodo(ClassificacaoTipoAfastamento.SERVICO_MILITAR).each { afast -> dias += Datas.diferencaDias(afast.inicio, fim) + 1 }",
+                        "explicacao": "Busca afastamentos por serviço militar e calcula dias"
+                    }
+                },
+                "buscaDiasAcidenteOuDoencaEmpregadorIsentosInss": {
+                    "descricao": "Retorna a quantidade de dias dentro da competência dos acidentes ou auxílios doença pagos pelo empregador",
+                    "parametros": [],
+                    "retorno": {
+                        "tipo": "int",
+                        "descricao": "Quantidade de dias de afastamento"
+                    },
+                    "exemplo": {
+                        "codigo": "int dias = Afastamentos.buscaDiasAcidenteOuDoencaEmpregadorIsentosInss()",
+                        "explicacao": "Busca dias de afastamento por acidente/doença isentos de INSS"
+                    }
+                }
+            }
+        },
+        "AvisoPrevio": {
+            "nome": "AvisoPrevio",
+            "atributos": {
+                "dataPrevistaDesligamento": {
+                    "tipo": "Date",
+                    "descricao": "Retorna a data prevista do desligamento informado no aviso prévio"
+                },
+                "motivoRescisao": {
+                    "tipo": "String",
+                    "descricao": "Retorna o motivo da rescisão informado no aviso prévio"
+                },
+                "dataAviso": {
+                    "tipo": "Date",
+                    "descricao": "Retorna a data do aviso prévio"
+                },
+                "dataFimAviso": {
+                    "tipo": "Date",
+                    "descricao": "Retorna a data final do aviso prévio"
+                },
+                "quantidadeDiasAviso": {
+                    "tipo": "int",
+                    "descricao": "Retorna a quantidade de dias de aviso prévio"
+                },
+                "tipo": {
+                    "tipo": "TipoAvisoPrevio",
+                    "descricao": "Retorna o tipo de aviso prévio"
+                }
+            },
+            "exemplo": {
+                "codigo": "if (AvisoPrevio.tipo.equals(TipoAvisoPrevio.INDENIZADO)) {\n    imprimir \"O tipo de aviso prévio é indenizado\"\n}",
+                "explicacao": "Verifica se o aviso prévio é do tipo indenizado"
+            }
+        },
+        "Bases": {
+            "nome": "Bases",
+            "metodos": {
+                "valor": {
+                    "descricao": "Permite buscar o valor de uma base no cálculo atual",
+                    "parametros": [
+                        {
+                            "nome": "tipo_base",
+                            "tipo": "BasesEnum",
+                            "obrigatorio": true,
+                            "descricao": "Tipo da base a ser consultada"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Valor da base consultada"
+                    },
+                    "exemplo": {
+                        "codigo": "base = Bases.valor(Bases.HORAEXTRA)",
+                        "explicacao": "Busca o valor da base de horas extras"
+                    }
+                },
+                "valorRra": {
+                    "descricao": "Permite buscar os valores da base de cálculo de um Rendimento Recebido Acumuladamente (RRA)",
+                    "parametros": [
+                        {
+                            "nome": "tipo_base",
+                            "tipo": "BasesEnum",
+                            "obrigatorio": true,
+                            "descricao": "Tipo da base a ser consultada"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Valor da base RRA"
+                    },
+                    "exemplo": {
+                        "codigo": "base = Bases.valorRra(Bases.IRRF) + Bases.valorRra(Bases.IRRF13)",
+                        "explicacao": "Soma bases de IRRF normal e 13º para RRA"
+                    }
+                },
+                "compor": {
+                    "descricao": "Permite informar um valor para composição de um ou vários tipos de bases de cálculo",
+                    "parametros": [
+                        {
+                            "nome": "valor",
+                            "tipo": "BigDecimal",
+                            "obrigatorio": true,
+                            "descricao": "Valor que irá compor a base"
+                        },
+                        {
+                            "nome": "tipos_bases",
+                            "tipo": "BasesEnum[]",
+                            "obrigatorio": true,
+                            "descricao": "Um ou vários tipos de bases"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "void",
+                        "descricao": "Não possui retorno"
+                    },
+                    "exemplo": {
+                        "codigo": "Bases.compor(valorCalculado, Bases.SALBASE, Bases.FGTS, Bases.IRRF, Bases.INSS)",
+                        "explicacao": "Compõe várias bases com o mesmo valor"
+                    }
+                },
+                "valorCalculado": {
+                    "descricao": "Permite buscar o valor de uma base de um cálculo que não seja o atual",
+                    "parametros": [
+                        {
+                            "nome": "tipo_base",
+                            "tipo": "BasesEnum",
+                            "obrigatorio": true,
+                            "descricao": "Tipo da base"
+                        },
+                        {
+                            "nome": "tipo_processamento",
+                            "tipo": "TipoProcessamentoEnum",
+                            "obrigatorio": true,
+                            "descricao": "Tipo de processamento"
+                        },
+                        {
+                            "nome": "subtipo_processamento",
+                            "tipo": "SubTipoProcessamentoEnum",
+                            "obrigatorio": true,
+                            "descricao": "Subtipo de processamento"
+                        },
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "obrigatorio": false,
+                            "descricao": "Competência para busca"
+                        },
+                        {
+                            "nome": "tipo_regime",
+                            "tipo": "TipoRegimeEnum",
+                            "obrigatorio": false,
+                            "descricao": "Tipo de regime"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Valor da base calculada"
+                    },
+                    "exemplo": {
+                        "codigo": "baseaux = Bases.valorCalculado(Bases.FGTS, calculo.tipoProcessamento, calculo.subTipoProcessamento)",
+                        "explicacao": "Busca valor da base de FGTS em outro processamento"
+                    }
+                }
+            }
+        },
+        "BasesOutrasEmpresas": {
+            "nome": "BasesOutrasEmpresas",
+            "metodos": {
+                "buscaPor": {
+                    "descricao": "Permite buscar uma lista de bases de outras empresas conforme o tipo de processamento e competência informada",
+                    "parametros": [
+                        {
+                            "nome": "tipo_processamento",
+                            "tipo": "TipoProcessamentoEnum",
+                            "obrigatorio": true,
+                            "descricao": "Tipo de processamento"
+                        },
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "obrigatorio": false,
+                            "descricao": "Competência para busca"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de bases de outras empresas",
+                        "propriedades": [
+                            {
+                                "nome": "baseInss",
+                                "descricao": "Valor de base do INSS"
+                            },
+                            {
+                                "nome": "baseIrrf",
+                                "descricao": "Valor de base do IRRF"
+                            },
+                            {
+                                "nome": "valorRetidoInss",
+                                "descricao": "Valor do INSS descontado"
+                            },
+                            {
+                                "nome": "valorRetidoIrrf",
+                                "descricao": "Valor do IRRF descontado"
+                            }
+                        ]
+                    },
+                    "exemplo": {
+                        "codigo": "return BasesOutrasEmpresas.buscaPor(TipoProcessamento.MENSAL, calculo.competencia).sum(0, { it.baseInss })",
+                        "explicacao": "Soma todas as bases de INSS de outras empresas"
+                    }
+                }
+            }
+        },
+        "Diarias": {
+            "nome": "Diarias",
+            "metodos": {
+                "buscaPorPeriodo": {
+                    "descricao": "Busca as diárias lançadas para a matrícula no sistema de Recursos Humanos conforme o período informado",
+                    "parametros": [
+                        {
+                            "nome": "dataInicial",
+                            "tipo": "Date",
+                            "obrigatorio": true,
+                            "descricao": "Data inicial para busca"
+                        },
+                        {
+                            "nome": "dataFinal",
+                            "tipo": "Date",
+                            "obrigatorio": true,
+                            "descricao": "Data final para busca"
+                        },
+                        {
+                            "nome": "descricaoNaturezaDiaria",
+                            "tipo": "String",
+                            "obrigatorio": false,
+                            "descricao": "Descrição da natureza da diária"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de diárias encontradas",
+                        "propriedades": [
+                            {
+                                "nome": "dataAutorizacao",
+                                "descricao": "Data da autorização"
+                            },
+                            {
+                                "nome": "totalDespesas",
+                                "descricao": "Total de despesas"
+                            },
+                            {
+                                "nome": "despesas",
+                                "descricao": "Lista de despesas da diária"
+                            }
+                        ]
+                    },
+                    "exemplo": {
+                        "codigo": "def diarias = Diarias.buscaPorPeriodo(Funcoes.inicioCompetencia(), Funcoes.fimCompetencia())",
+                        "explicacao": "Busca diárias do período da competência"
+                    }
+                }
+            }
+        },
+        "Eventos": {
+            "nome": "Eventos",
+            "metodos": {
+                "valor": {
+                    "descricao": "Permite o valor calculado de um evento do cálculo atual",
+                    "parametros": [
+                        {
+                            "nome": "codigo",
+                            "tipo": "Long",
+                            "obrigatorio": true,
+                            "descricao": "Código do evento"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Valor calculado do evento"
+                    },
+                    "exemplo": {
+                        "codigo": "valorCalculado = Eventos.valor(4) + Eventos.valor(5)",
+                        "explicacao": "Soma valores de dois eventos"
+                    }
+                },
+                "valorReferencia": {
+                    "descricao": "Permite o valor de referência de um evento do cálculo atual",
+                    "parametros": [
+                        {
+                            "nome": "codigo",
+                            "tipo": "Long",
+                            "obrigatorio": true,
+                            "descricao": "Código do evento"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Valor de referência do evento"
+                    },
+                    "exemplo": {
+                        "codigo": "valorReferencia = Eventos.valorReferencia(7)",
+                        "explicacao": "Obtém valor de referência do evento 7"
+                    }
+                }
+            }
+        },
+        "EncargosSociais": {
+            "nome": "EncargosSociais",
+            "propriedades": {
+                "pisoSalarial": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o piso salarial configurado na manutenção de estabelecimentos para a vigência calculada"
+                },
+                "salarioMinimo": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o salário mínimo configurado na manutenção de estabelecimentos para a vigência calculada"
+                },
+                "tetoSalarial": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o teto salarial configurado na manutenção de estabelecimentos para a vigência calculada"
+                },
+                "inicioVigencia": {
+                    "tipo": "Date",
+                    "descricao": "Retorna o inicio da vigência configurada na manutenção de estabelecimentos"
+                },
+                "cnaePreponderante": {
+                    "tipo": "String",
+                    "descricao": "Retorna o CNAE preponderante configurado na manutenção de estabelecimentos"
+                },
+                "codigoFpas": {
+                    "tipo": "String",
+                    "descricao": "Retorna o código FPAS configurado na manutenção de estabelecimentos"
+                },
+                "codigoTerceiros": {
+                    "tipo": "String",
+                    "descricao": "Retorna o código de terceiros configurado na manutenção de estabelecimentos"
+                },
+                "percentualFap": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o percentual do FAP configurado na manutenção de estabelecimentos"
+                },
+                "percentualGilRat": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o percentual do RAT configurado na manutenção de estabelecimentos"
+                },
+                "percentualInssEmpregador": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o percentual do INSS empregador configurado"
+                },
+                "percentualIsencaoFilantropia": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o percentual de isenção de entidade filantrópica"
+                },
+                "percentualTerceiros": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o percentual de terceiros configurado"
+                }
+            },
+            "subgruposAssistenciaMunicipal": {
+                "AssistenciaMunicipal": {
+                    "nome": "AssistenciaMunicipal",
+                    "metodos": {
+                        "buscaContribuicao": {
+                            "descricao": "Retorna um valor da coluna em uma faixa encontrada conforme o valor informado",
+                            "parametros": [
+                                {
+                                    "nome": "base",
+                                    "tipo": "BigDecimal",
+                                    "obrigatorio": true,
+                                    "descricao": "Valor base para comparação"
+                                },
+                                {
+                                    "nome": "coluna",
+                                    "tipo": "int",
+                                    "obrigatorio": true,
+                                    "descricao": "Coluna que deve retornar"
+                                }
+                            ],
+                            "retorno": {
+                                "tipo": "BigDecimal",
+                                "descricao": "Valor da contribuição encontrada"
+                            }
+                        },
+                        "buscaMaior": {
+                            "descricao": "Retorna a coluna referente faixa de maior valor encontrada",
+                            "parametros": [
+                                {
+                                    "nome": "coluna",
+                                    "tipo": "int",
+                                    "obrigatorio": true,
+                                    "descricao": "Coluna que deve retornar"
+                                }
+                            ],
+                            "retorno": {
+                                "tipo": "BigDecimal",
+                                "descricao": "Maior valor encontrado para a coluna"
+                            }
+                        },
+                        "buscaTabela": {
+                            "descricao": "Retorna a tabela vigente com as respectivas alíquotas e valor máximo",
+                            "parametros": [],
+                            "retorno": {
+                                "tipo": "List",
+                                "descricao": "Lista de faixas com alíquotas e valores máximos"
+                            }
+                        }
+                    },
+                    "propriedades": {
+                        "maximo": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Valor máximo de desconto de assistência municipal"
+                        },
+                        "minimo": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Valor mínimo de desconto de assistência municipal"
+                        },
+                        "indiceAporte": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Índice do aporte de assistência municipal"
+                        },
+                        "taxaAdministrativa": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Taxa administrativa de assistência municipal"
+                        }
+                    }
+                },
+                "FGTS": {
+                    "nome": "FGTS",
+                    "propriedades": {
+                        "codigoFgts": {
+                            "tipo": "String",
+                            "descricao": "Retorna o código de saque do FGTS da entidade"
+                        },
+                        "multaFgts": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Retorna o percentual de multa do FGTS"
+                        }
+                    }
+                }
+            },
+            "subgruposIRRF": {
+                "IRRF": {
+                    "nome": "IRRF",
+                    "metodos": {
+                        "buscaContribuicao": {
+                            "descricao": "Retorna um valor da coluna em uma faixa encontrada conforme o valor informado",
+                            "parametros": [
+                                {
+                                    "nome": "base",
+                                    "tipo": "BigDecimal",
+                                    "obrigatorio": true,
+                                    "descricao": "Valor base para comparação"
+                                },
+                                {
+                                    "nome": "coluna",
+                                    "tipo": "int",
+                                    "obrigatorio": true,
+                                    "descricao": "Coluna que deve retornar"
+                                }
+                            ],
+                            "retorno": {
+                                "tipo": "BigDecimal",
+                                "descricao": "Valor da contribuição encontrada"
+                            }
+                        }
+                    },
+                    "propriedades": {
+                        "deducaoPorDependente": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Retorna o valor da dedução por dependente"
+                        },
+                        "deducaoSimplificadaIrrf": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Retorna o valor da dedução simplificada do IRRF"
+                        },
+                        "minimoIrrfDarf": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Retorna o valor mínimo de desconto de IRRF"
+                        },
+                        "parcelaIsentaAposentadoria": {
+                            "tipo": "BigDecimal",
+                            "descricao": "Retorna o valor da parcela isenta de aposentadoria"
+                        }
+                    }
+                },
+                "RGPS": {
+                    "nome": "RGPS",
+                    "metodos": {
+                        "buscaContribuicao": {
+                            "descricao": "Retorna um valor da coluna em uma faixa encontrada conforme o valor informado",
+                            "parametros": [
+                                {
+                                    "nome": "base",
+                                    "tipo": "BigDecimal",
+                                    "obrigatorio": true,
+                                    "descricao": "Valor base para comparação"
+                                },
+                                {
+                                    "nome": "coluna",
+                                    "tipo": "int",
+                                    "obrigatorio": true,
+                                    "descricao": "Coluna que deve retornar"
+                                }
+                            ]
+                        },
+                        "buscaTabela": {
+                            "descricao": "Retorna a tabela do RGPS vigente com as alíquotas e limites",
+                            "retorno": {
+                                "tipo": "List",
+                                "descricao": "Lista de faixas com alíquotas e valores"
+                            }
+                        }
+                    }
+                },
+                "RPPS": {
+                    "nome": "RPPS",
+                    "subgruposRPPS": {
+                        "FundoFinanceiro": {
+                            "metodos": {
+                                "buscaContribuicao": {
+                                    "descricao": "Retorna um valor da coluna em uma faixa encontrada",
+                                    "parametros": [
+                                        {
+                                            "nome": "base",
+                                            "tipo": "BigDecimal",
+                                            "obrigatorio": true,
+                                            "descricao": "Valor base para comparação"
+                                        },
+                                        {
+                                            "nome": "coluna",
+                                            "tipo": "int",
+                                            "obrigatorio": true,
+                                            "descricao": "Coluna que deve retornar"
+                                        }
+                                    ]
+                                }
+                            },
+                            "propriedades": {
+                                "maximo": {
+                                    "tipo": "BigDecimal",
+                                    "descricao": "Valor máximo de desconto do fundo financeiro"
+                                },
+                                "minimo": {
+                                    "tipo": "BigDecimal",
+                                    "descricao": "Valor mínimo de desconto do fundo financeiro"
+                                },
+                                "indiceAporte": {
+                                    "tipo": "BigDecimal",
+                                    "descricao": "Índice do aporte do fundo financeiro"
+                                },
+                                "taxaAdministrativa": {
+                                    "tipo": "BigDecimal",
+                                    "descricao": "Taxa administrativa do fundo financeiro"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "FuncoesGratificadas": {
+            "nome": "FuncoesGratificadas",
+            "metodos": {
+                "busca": {
+                    "descricao": "Retorna os dias em função gratificada na competência com o id da função gratificada",
+                    "parametros": [
+                        {
+                            "nome": "idFuncaoGratificada",
+                            "tipo": "Long",
+                            "obrigatorio": true,
+                            "descricao": "ID da função gratificada"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "int",
+                        "descricao": "Quantidade de dias na função gratificada"
+                    },
+                    "exemplo": {
+                        "codigo": "int diasFuncao = FuncoesGratificadas.busca(123)",
+                        "explicacao": "Busca dias trabalhados na função gratificada de ID 123"
+                    }
+                }
+            }
+        },
+        "Emprestimos": {
+            "nome": "Emprestimos",
+            "metodos": {
+                "busca": {
+                    "descricao": "Retorna uma lista de empréstimos cadastrados no RH",
+                    "parametros": [
+                        {
+                            "nome": "situacaoEmprestimo",
+                            "tipo": "SituacaoEmprestimo",
+                            "obrigatorio": false,
+                            "descricao": "Situação do empréstimo para filtro"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de empréstimos encontrados",
+                        "propriedades": [
+                            {
+                                "nome": "id",
+                                "descricao": "Id do empréstimo"
+                            },
+                            {
+                                "nome": "dataInicial",
+                                "descricao": "Data inicial do empréstimo"
+                            },
+                            {
+                                "nome": "dataFinal",
+                                "descricao": "Data final do empréstimo"
+                            },
+                            {
+                                "nome": "pessoaJuridica",
+                                "descricao": "Pessoa jurídica do empréstimo"
+                            },
+                            {
+                                "nome": "parcelas",
+                                "descricao": "Lista de parcelas do empréstimo"
+                            }
+                        ]
+                    },
+                    "exemplo": {
+                        "codigo": "Emprestimos.busca(SituacaoEmprestimo.EM_ANDAMENTO).each { e -> valorTotal += e.parcelas.sum { it.valorParcela } }",
+                        "explicacao": "Soma valores das parcelas de empréstimos em andamento"
+                    }
+                },
+                "pagarParcela": {
+                    "descricao": "Realiza a baixa da parcela de empréstimo no RH",
+                    "parametros": [
+                        {
+                            "nome": "emprestimoId",
+                            "tipo": "Long",
+                            "obrigatorio": true,
+                            "descricao": "ID do empréstimo"
+                        },
+                        {
+                            "nome": "parcelaId",
+                            "tipo": "Long",
+                            "obrigatorio": true,
+                            "descricao": "ID da parcela"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "void",
+                        "descricao": "Não possui retorno"
+                    },
+                    "exemplo": {
+                        "codigo": "Emprestimos.pagarParcela(e.id, p.id)",
+                        "explicacao": "Realiza baixa de uma parcela de empréstimo"
+                    }
+                }
+            }
+        },
+        "Lancamentos": {
+            "nome": "Lancamentos",
+            "metodos": {
+                "valor": {
+                    "descricao": "Verifica se o evento está lançado em variáveis e retorna o valor lançado",
+                    "parametros": [
+                        {
+                            "nome": "evento",
+                            "tipo": "Long",
+                            "obrigatorio": true,
+                            "descricao": "Código do evento"
+                        },
+                        {
+                            "nome": "valorPadrao",
+                            "tipo": "BigDecimal",
+                            "obrigatorio": false,
+                            "descricao": "Valor padrão quando não existe lançamento"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Valor do lançamento ou valor padrão"
+                    },
+                    "exemplo": {
+                        "codigo": "def vvar = Lancamentos.valor(evento)\nif (vvar >= 0) { valorCalculado = vvar }",
+                        "explicacao": "Busca valor lançado para o evento atual"
+                    }
+                },
+                "valorPorEventoId": {
+                    "descricao": "Verifica se o evento informado está lançado em variáveis",
+                    "parametros": [
+                        {
+                            "nome": "eventoId",
+                            "tipo": "Long",
+                            "obrigatorio": true,
+                            "descricao": "Código do evento"
+                        },
+                        {
+                            "nome": "valorPadrao",
+                            "tipo": "BigDecimal",
+                            "obrigatorio": false,
+                            "descricao": "Valor padrão quando não existe lançamento"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Valor do lançamento ou valor padrão"
+                    }
+                },
+                "gerar": {
+                    "descricao": "Permite inserir um valor de lançamento de evento para qualquer competência e tipo de processamento",
+                    "parametros": [
+                        {
+                            "nome": "tipoProcessamento",
+                            "tipo": "TipoProcessamentoEnum",
+                            "obrigatorio": true,
+                            "descricao": "Tipo de processamento"
+                        },
+                        {
+                            "nome": "subTipoProcessamento",
+                            "tipo": "SubTipoProcessamentoEnum",
+                            "obrigatorio": true,
+                            "descricao": "Subtipo de processamento"
+                        },
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "obrigatorio": true,
+                            "descricao": "Competência do lançamento"
+                        },
+                        {
+                            "nome": "codigoEvento",
+                            "tipo": "Long",
+                            "obrigatorio": true,
+                            "descricao": "Código do evento"
+                        },
+                        {
+                            "nome": "valor",
+                            "tipo": "BigDecimal",
+                            "obrigatorio": true,
+                            "descricao": "Valor a ser lançado"
+                        },
+                        {
+                            "nome": "observacao",
+                            "tipo": "String",
+                            "obrigatorio": false,
+                            "descricao": "Observação do lançamento"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "void",
+                        "descricao": "Não possui retorno"
+                    }
+                },
+                "valorComposicaoMes": {
+                    "descricao": "Retorna o valor totalizado de todos os lançamentos para eventos que compõem mês",
+                    "parametros": [],
+                    "retorno": {
+                        "tipo": "BigDecimal",
+                        "descricao": "Valor total dos lançamentos"
+                    }
+                }
+            }
+        },
+        "PlanoSaudeDespesas": {
+            "nome": "PlanoSaudeDespesas",
+            "metodos": {
+                "buscaDespesasPlanoSaude": {
+                    "descricao": "Busca uma lista de despesas com planos de saúde",
+                    "parametros": [
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "obrigatorio": false,
+                            "descricao": "Competência específica para busca. Se não informada, busca todas do ano"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de despesas com planos de saúde",
+                        "propriedades": [
+                            {
+                                "nome": "planoSaude",
+                                "tipo": "Object",
+                                "propriedades": {
+                                    "id": "Id do plano de saúde",
+                                    "configuracao": "Configuração do plano",
+                                    "numeroContrato": "Número do contrato",
+                                    "carteiraIdentificacao": "Carteira de identificação"
+                                }
+                            },
+                            {
+                                "nome": "beneficiario",
+                                "tipo": "Object",
+                                "propriedades": {
+                                    "nome": "Nome do beneficiário",
+                                    "cpf": "CPF do beneficiário",
+                                    "dataNascimento": "Data de nascimento",
+                                    "sexo": "Sexo do beneficiário"
+                                }
+                            },
+                            {
+                                "nome": "valor",
+                                "descricao": "Valor da despesa com subsídio"
+                            },
+                            {
+                                "nome": "tipo",
+                                "descricao": "Tipo de despesa (MENSALIDADE, PROCEDIMENTOS)"
+                            }
+                        ]
+                    },
+                    "exemplo": {
+                        "codigo": "PlanoSaudeDespesas.buscaDespesasPlanoSaude().each { despesa -> if (despesa.tipo == TipoDespesaPlanoSaude.MENSALIDADE) { vaux += despesa.valor } }",
+                        "explicacao": "Soma todas as despesas de mensalidade do plano de saúde"
+                    }
+                }
+            }
+        },
+        "PeriodosAquisitivos": {
+            "nome": "PeriodosAquisitivos",
+            "metodos": {
+                "buscaPeriodosComSaldo": {
+                    "descricao": "Retorna uma lista de períodos aquisitivos de férias que tenham saldo",
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de períodos aquisitivos",
+                        "propriedades": [
+                            {
+                                "nome": "dataInicial",
+                                "descricao": "Data inicial do período"
+                            },
+                            {
+                                "nome": "dataFinal",
+                                "descricao": "Data final do período"
+                            },
+                            {
+                                "nome": "saldo",
+                                "descricao": "Saldo de dias para gozo"
+                            },
+                            {
+                                "nome": "situacao",
+                                "descricao": "Situação do período"
+                            }
+                        ]
+                    }
+                },
+                "buscaVencidos": {
+                    "descricao": "Retorna uma lista de períodos aquisitivos de férias que estejam vencidos",
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de períodos vencidos"
+                    }
+                },
+                "buscaProporcional": {
+                    "descricao": "Retorna um período aquisitivo de férias que esteja em andamento",
+                    "retorno": {
+                        "tipo": "Object",
+                        "descricao": "Período proporcional"
+                    }
+                },
+                "quitaPorRescisao": {
+                    "descricao": "Realiza a baixa de um período aquisitivo de férias",
+                    "parametros": [
+                        {
+                            "nome": "periodoAquisitivo",
+                            "tipo": "Object",
+                            "obrigatorio": true,
+                            "descricao": "Período a ser quitado"
+                        },
+                        {
+                            "nome": "valorReferencia",
+                            "tipo": "BigDecimal",
+                            "obrigatorio": false,
+                            "descricao": "Valor de referência"
+                        },
+                        {
+                            "nome": "valorCalculado",
+                            "tipo": "BigDecimal",
+                            "obrigatorio": false,
+                            "descricao": "Valor calculado"
+                        },
+                        {
+                            "nome": "compoeMediaVantagem",
+                            "tipo": "Boolean",
+                            "obrigatorio": false,
+                            "descricao": "Se compõe média/vantagem"
+                        }
+                    ]
+                }
+            }
+        },
+        "PeriodosAquisitivosDecimoTerceiro": {
+            "nome": "PeriodosAquisitivosDecimoTerceiro",
+            "metodos": {
+                "buscaPeriodosAquisitivosBySituacao": {
+                    "descricao": "Retorna períodos aquisitivos de 13º conforme situação",
+                    "parametros": [
+                        {
+                            "nome": "situacao",
+                            "tipo": "SituacaoPeriodoAquisitivoDecimoTerceiro",
+                            "obrigatorio": true,
+                            "descricao": "Situação desejada"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de períodos aquisitivos",
+                        "propriedades": [
+                            {
+                                "nome": "avosAdquiridos",
+                                "descricao": "Avos já adquiridos"
+                            },
+                            {
+                                "nome": "avosPerdidos",
+                                "descricao": "Avos perdidos"
+                            },
+                            {
+                                "nome": "situacao",
+                                "descricao": "Situação do período"
+                            }
+                        ]
+                    }
+                },
+                "compoePagamento": {
+                    "descricao": "Indica que o valor evento é referente a um período aquisitivo de 13º",
+                    "parametros": [
+                        {
+                            "nome": "periodoAquisitivoDecimoTerceiro",
+                            "tipo": "Object",
+                            "obrigatorio": true,
+                            "descricao": "Período sendo baixado"
+                        },
+                        {
+                            "nome": "valor",
+                            "tipo": "BigDecimal",
+                            "obrigatorio": true,
+                            "descricao": "Valor calculado"
+                        }
+                    ]
+                }
+            }
+        },
+        "ValesTransporte": {
+            "nome": "ValesTransporte",
+            "metodos": {
+                "busca": {
+                    "descricao": "Retorna do RH o valor ou quantidade de vales transporte",
+                    "parametros": [
+                        {
+                            "nome": "tipoRetornoValeTransporte",
+                            "tipo": "TipoRetornoValeTransporteEnum",
+                            "obrigatorio": true,
+                            "descricao": "Define se retorna valor ou quantidade"
+                        }
+                    ],
+                    "retorno": {
+                        "tipo": "Object",
+                        "descricao": "Valor ou quantidade de vales",
+                        "propriedades": {
+                            "valorTotal": "Valor total do vale transporte",
+                            "tipoRetorno": "Tipo do retorno (VALOR ou QUANTIDADE)"
+                        }
+                    },
+                    "exemplo": {
+                        "codigo": "BigDecimal valor = ValesTransporte.busca(TipoRetornoValeTransporte.VALOR)\nint quantidade = ValesTransporte.busca(TipoRetornoValeTransporte.QUANTIDADE)",
+                        "explicacao": "Busca valor e quantidade de vales transporte"
+                    }
+                }
+            }
+        }
+    }
+}

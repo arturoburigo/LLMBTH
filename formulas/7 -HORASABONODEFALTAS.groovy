@@ -1,0 +1,1 @@
+valorApurado = 0

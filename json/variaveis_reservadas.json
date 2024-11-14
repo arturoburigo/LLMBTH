@@ -1,0 +1,760 @@
+{
+    "variaveis_reservadas": {
+        "aposentado": {
+            "nome": "aposentado",
+            "descricao": "Retorna os dados da matrícula que sejam do tipo aposentado no cálculo",
+            "propriedades": {
+                "formaPagamento": {
+                    "tipo": "FormaPagamentoEnum",
+                    "descricao": "Retorna a forma de pagamento do aposentado",
+                    "exemplo": "if (aposentado.formaPagamento == FormaPagamento.CHEQUE) { print 'Pagamento em cheque' }"
+                },
+                "grupoFuncional": {
+                    "tipo": "String",
+                    "descricao": "Retorna o grupo funcional"
+                },
+                "recebeDecimoTerceiro": {
+                    "tipo": "Boolean",
+                    "descricao": "Indicativo se recebe décimo terceiro salário"
+                },
+                "dataAposentadoria": {
+                    "tipo": "Date",
+                    "descricao": "Data de início da aposentadoria"
+                },
+                "dataCessacaoAposentadoria": {
+                    "tipo": "Date",
+                    "descricao": "Data de cessação da aposentadoria"
+                },
+                "valorBeneficio": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor do benefício do aposentado"
+                },
+                "codigoOrganograma": {
+                    "tipo": "String",
+                    "descricao": "Código do organograma"
+                }
+            },
+            "metodos": {
+                "buscaPorCessacao": {
+                    "descricao": "Busca dados das cessações vigentes na competência",
+                    "parametros": [
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "descricao": "Competência para busca"
+                        }
+                    ],
+                    "retorno": "Lista de cessações"
+                },
+                "buscaPorSuspensao": {
+                    "descricao": "Busca dados das suspensões vigentes na competência",
+                    "parametros": [
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "descricao": "Competência para busca"
+                        }
+                    ],
+                    "retorno": "Lista de suspensões"
+                }
+            }
+        },
+        "autonomo": {
+            "nome": "autonomo",
+            "descricao": "Retorna os dados da matrícula que sejam do tipo autônomo no cálculo",
+            "propriedades": {
+                "codESocial": {
+                    "tipo": "String",
+                    "descricao": "Código eSocial do autônomo"
+                }
+            }
+        },
+        "calculo": {
+            "nome": "calculo",
+            "descricao": "Retorna as informações dos parâmetros de cálculo e também do cálculo que está sendo executado",
+            "propriedades": {
+                "competencia": {
+                    "tipo": "Date",
+                    "descricao": "Data referente ao último dia da competência calculada"
+                },
+                "quantidadeDiasCompetencia": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias da competência"
+                },
+                "tipoProcessamento": {
+                    "tipo": "TipoProcessamentoEnum",
+                    "descricao": "Tipo de processamento do cálculo atual"
+                },
+                "subTipoProcessamento": {
+                    "tipo": "SubTipoProcessamentoEnum",
+                    "descricao": "Subtipo de processamento do cálculo atual"
+                },
+                "dataPagamento": {
+                    "tipo": "Date",
+                    "descricao": "Data de pagamento do cálculo"
+                },
+                "dataRescisao": {
+                    "tipo": "Date",
+                    "descricao": "Data de rescisão (quando aplicável)"
+                },
+                "unidade": {
+                    "tipo": "UnidadeCalculoEnum",
+                    "descricao": "Unidade de pagamento configurada"
+                },
+                "anoDecimoTerceiro": {
+                    "tipo": "int",
+                    "descricao": "Ano do cálculo para fins de 13º"
+                },
+                "consideraAvosPerdidos": {
+                    "tipo": "Boolean",
+                    "descricao": "Se considera avos perdidos na contagem"
+                },
+                "saldoFgts": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Saldo do FGTS informado na rescisão"
+                }
+            },
+            "metodos": {
+                "quantidadeDias": {
+                    "descricao": "Retorna quantidade de dias de uma competência",
+                    "parametros": [
+                        {
+                            "nome": "mes",
+                            "tipo": "int",
+                            "descricao": "Mês de referência (1-12)"
+                        },
+                        {
+                            "nome": "ano",
+                            "tipo": "int",
+                            "descricao": "Ano de referência"
+                        }
+                    ],
+                    "retorno": "int - Quantidade de dias"
+                },
+                "soma": {
+                    "descricao": "Soma os valores totais do cálculo para um tipo de evento",
+                    "parametros": [
+                        {
+                            "nome": "tipoEvento",
+                            "tipo": "TipoEventoEnum",
+                            "descricao": "Tipo do evento para soma"
+                        }
+                    ],
+                    "retorno": "BigDecimal - Valor total"
+                }
+            }
+        },
+        "estagiario": {
+            "nome": "estagiario",
+            "descricao": "Retorna os dados da matrícula que sejam do tipo estagiário no cálculo",
+            "propriedades": {
+                "formaPagamento": {
+                    "tipo": "FormaPagamentoEnum",
+                    "descricao": "Forma de pagamento do estagiário",
+                    "exemplo": "if (estagiario.formaPagamento == FormaPagamento.DINHEIRO) { print 'Pagamento em dinheiro' }"
+                },
+                "grupoFuncional": {
+                    "tipo": "String",
+                    "descricao": "Grupo funcional do estagiário"
+                },
+                "planoSalarial": {
+                    "tipo": "String",
+                    "descricao": "Plano salarial do estagiário"
+                },
+                "classeSalarial": {
+                    "tipo": "String",
+                    "descricao": "Classe salarial do estagiário"
+                },
+                "dataProrrogacao": {
+                    "tipo": "Date",
+                    "descricao": "Data da prorrogação do estágio"
+                },
+                "nivelSalarial": {
+                    "tipo": "String",
+                    "descricao": "Nível salarial do estagiário"
+                },
+                "quantidadeHorasMes": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Quantidade de horas mensais do estágio"
+                },
+                "recebeDecimoTerceiro": {
+                    "tipo": "Boolean",
+                    "descricao": "Se recebe décimo terceiro salário"
+                },
+                "diasDireitoFerias": {
+                    "tipo": "int",
+                    "descricao": "Dias de direito de férias"
+                },
+                "dataInicioEstagio": {
+                    "tipo": "Date",
+                    "descricao": "Data de início do estágio"
+                },
+                "dataFinalEstagio": {
+                    "tipo": "Date",
+                    "descricao": "Data final do estágio"
+                },
+                "bolsaEstudos": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor da bolsa de estudos"
+                }
+            }
+        },
+        "evento": {
+            "nome": "evento",
+            "descricao": "Retorna as informações da configuração do evento",
+            "propriedades": {
+                "codigo": {
+                    "tipo": "Long",
+                    "descricao": "Código do evento"
+                },
+                "taxa": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Taxa do evento atual"
+                },
+                "tipo": {
+                    "tipo": "TipoEventoEnum",
+                    "descricao": "Tipo do evento (VENCIMENTO, DESCONTO, etc)"
+                },
+                "unidade": {
+                    "tipo": "UnidadeEventoEnum",
+                    "descricao": "Unidade do evento"
+                },
+                "descricaoClassificacao": {
+                    "tipo": "String",
+                    "descricao": "Descrição da classificação do evento"
+                },
+                "classificacao": {
+                    "tipo": "ClassificacaoEventoEnum",
+                    "descricao": "Classificação do evento"
+                }
+            },
+            "metodos": {
+                "getTaxa": {
+                    "descricao": "Retorna a taxa de outro evento",
+                    "parametros": [
+                        {
+                            "nome": "codigoEvento",
+                            "tipo": "Long",
+                            "descricao": "Código do evento"
+                        }
+                    ],
+                    "retorno": "BigDecimal - Taxa do evento"
+                },
+                "replicado": {
+                    "descricao": "Seta um evento como replicado no cálculo",
+                    "parametros": [
+                        {
+                            "nome": "valor",
+                            "tipo": "Boolean",
+                            "descricao": "Se deve ser replicado"
+                        }
+                    ]
+                }
+            }
+        },
+        "folha": {
+            "nome": "folha",
+            "descricao": "Permite buscar ou percorrer as informações da folha atual",
+            "propriedades": {
+                "calculoVirtual": {
+                    "tipo": "Boolean",
+                    "descricao": "Se é um cálculo virtual de férias ou 13º"
+                },
+                "competencia": {
+                    "tipo": "Date",
+                    "descricao": "Competência da folha"
+                },
+                "complementoDecimoTerceiro": {
+                    "tipo": "Boolean",
+                    "descricao": "Se é um complemento de 13º salário"
+                },
+                "diasAbono": {
+                    "tipo": "int",
+                    "descricao": "Dias de abono de férias"
+                },
+                "diasGozo": {
+                    "tipo": "int",
+                    "descricao": "Dias de gozo de férias"
+                },
+                "dataPagamento": {
+                    "tipo": "Date",
+                    "descricao": "Data de pagamento da folha"
+                },
+                "eventos": {
+                    "tipo": "List",
+                    "descricao": "Lista de eventos calculados"
+                },
+                "fimGozoFeriasCalculadas": {
+                    "tipo": "Date",
+                    "descricao": "Fim do gozo de férias calculadas"
+                },
+                "folhaPagamento": {
+                    "tipo": "Boolean",
+                    "descricao": "Se é uma folha de pagamento"
+                },
+                "inicioGozoFeriasCalculadas": {
+                    "tipo": "Date",
+                    "descricao": "Início do gozo de férias calculadas"
+                },
+                "quantidadeMesesRra": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de meses de RRA"
+                },
+                "totalBruto": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Total bruto da folha"
+                },
+                "totalDesconto": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Total de descontos da folha"
+                },
+                "totalLiquido": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Total líquido da folha"
+                }
+            }
+        },
+        "funcionario": {
+            "nome": "funcionario",
+            "descricao": "Retorna os dados da matrícula que sejam do tipo funcionário no cálculo",
+            "propriedades": {
+                "salario": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna o salário do funcionário"
+                },
+                "cargo": {
+                    "tipo": "String",
+                    "descricao": "Retorna o cargo do funcionário"
+                },
+                "dataAdmissao": {
+                    "tipo": "Date",
+                    "descricao": "Retorna a data de admissão"
+                },
+                "dataBase": {
+                    "tipo": "Date",
+                    "descricao": "Retorna a data base do funcionário"
+                },
+                "dataFimVinculo": {
+                    "tipo": "Date",
+                    "descricao": "Retorna a data final do vínculo temporário"
+                },
+                "dataOpcaoFgts": {
+                    "tipo": "Date",
+                    "descricao": "Retorna a data da opção de FGTS"
+                },
+                "dataRescisao": {
+                    "tipo": "Date",
+                    "descricao": "Retorna a data da rescisão"
+                },
+                "estatutario": {
+                    "tipo": "Boolean",
+                    "descricao": "Indica se é estatutário"
+                },
+                "planoSalarial": {
+                    "tipo": "String",
+                    "descricao": "Retorna o plano salarial"
+                },
+                "classeSalarial": {
+                    "tipo": "String",
+                    "descricao": "Retorna a classe salarial"
+                },
+                "nivelSalarial": {
+                    "tipo": "String",
+                    "descricao": "Retorna o nível salarial"
+                },
+                "quantidadeHorasMes": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Retorna a quantidade de horas mensais"
+                },
+                "sindicato": {
+                    "tipo": "String",
+                    "descricao": "Retorna o nome do sindicato"
+                }
+            },
+            "metodos": {
+                "cargoOrigemRendimento": {
+                    "descricao": "Retorna o cargo conforme origem do rendimento",
+                    "parametros": [
+                        {
+                            "nome": "origemRendimento",
+                            "tipo": "OrigemRendimentoEnum",
+                            "descricao": "Origem do rendimento"
+                        }
+                    ],
+                    "retorno": "String"
+                },
+                "possuiPrevidencia": {
+                    "descricao": "Verifica se possui previdência específica",
+                    "parametros": [
+                        {
+                            "nome": "tipoPrevidencia",
+                            "tipo": "TipoPrevidenciaEnum",
+                            "descricao": "Tipo de previdência"
+                        }
+                    ],
+                    "retorno": "Boolean"
+                },
+                "possuiAvisoPrevio": {
+                    "descricao": "Verifica se possui aviso prévio",
+                    "retorno": "Boolean"
+                },
+                "camposAdicionais.busca": {
+                    "descricao": "Retorna valor de campo adicional",
+                    "parametros": [
+                        {
+                            "nome": "variavel",
+                            "tipo": "String",
+                            "descricao": "Nome da variável"
+                        }
+                    ],
+                    "retorno": "Object"
+                }
+            }
+        },
+        "matricula": {
+            "nome": "matricula",
+            "descricao": "Retorna os dados comuns a todos os tipos de matrículas",
+            "propriedades": {
+                "tipo": {
+                    "tipo": "TipoMatriculaEnum",
+                    "descricao": "Tipo da matrícula"
+                },
+                "codigo": {
+                    "tipo": "String",
+                    "descricao": "Código da matrícula (com contrato)"
+                }
+            }
+        },
+        "mediaVantagem": {
+            "nome": "mediaVantagem",
+            "descricao": "Retorna os valores de média ou vantagem calculados conforme o tipo configurado para o evento",
+            "metodos": {
+                "calcular": {
+                    "descricao": "Calcula média/vantagem conforme configuração",
+                    "sobrecargas": [
+                        {
+                            "descricao": "Cálculo com período aquisitivo",
+                            "parametros": [
+                                {
+                                    "nome": "periodoAquisitivo",
+                                    "tipo": "Object",
+                                    "descricao": "Período aquisitivo"
+                                }
+                            ]
+                        },
+                        {
+                            "descricao": "Cálculo com avos",
+                            "parametros": [
+                                {
+                                    "nome": "avos",
+                                    "tipo": "int",
+                                    "descricao": "Avos para referência"
+                                }
+                            ]
+                        },
+                        {
+                            "descricao": "Cálculo com período definido",
+                            "parametros": [
+                                {
+                                    "nome": "dataInicial",
+                                    "tipo": "Date",
+                                    "descricao": "Data inicial"
+                                },
+                                {
+                                    "nome": "dataFinal",
+                                    "tipo": "Date",
+                                    "descricao": "Data final"
+                                }
+                            ]
+                        }
+                    ],
+                    "retorno": "BigDecimal"
+                }
+            },
+            "exemplo": {
+                "codigo": "BigDecimal valorMedia = mediaVantagem.calcular(periodoAquisitivo)",
+                "explicacao": "Calcula média sobre um período aquisitivo"
+            }
+        },
+        "pensionista": {
+            "nome": "pensionista",
+            "descricao": "Retorna os dados da matrícula que sejam do tipo pensionista no cálculo",
+            "propriedades": {
+                "formaPagamento": {
+                    "tipo": "FormaPagamentoEnum",
+                    "descricao": "Forma de pagamento do pensionista"
+                },
+                "grupoFuncional": {
+                    "tipo": "String",
+                    "descricao": "Grupo funcional do pensionista"
+                },
+                "recebeDecimoTerceiro": {
+                    "tipo": "Boolean",
+                    "descricao": "Se recebe décimo terceiro salário"
+                },
+                "valorBeneficio": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor do benefício do pensionista"
+                },
+                "dataInicioBeneficio": {
+                    "tipo": "Date",
+                    "descricao": "Data do início do benefício"
+                },
+                "dataCessacaoBeneficio": {
+                    "tipo": "Date",
+                    "descricao": "Data de cessação do benefício"
+                },
+                "agenciaPagamento": {
+                    "tipo": "String",
+                    "descricao": "Agência de pagamento"
+                },
+                "bancoPagamento": {
+                    "tipo": "String",
+                    "descricao": "Banco de pagamento"
+                },
+                "possuiFundoAssistencia": {
+                    "tipo": "Boolean",
+                    "descricao": "Se possui fundo de assistência"
+                },
+                "possuiPrevidenciaPropria": {
+                    "tipo": "Boolean",
+                    "descricao": "Se possui previdência própria"
+                }
+            },
+            "metodos": {
+                "buscaPorCessacao": {
+                    "descricao": "Busca dados das cessações do pensionista",
+                    "parametros": [
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "descricao": "Competência para busca"
+                        }
+                    ],
+                    "retorno": "List de cessações"
+                },
+                "buscaPorSuspensao": {
+                    "descricao": "Busca dados das suspensões do pensionista",
+                    "parametros": [
+                        {
+                            "nome": "competencia",
+                            "tipo": "Date",
+                            "descricao": "Competência para busca"
+                        }
+                    ],
+                    "retorno": "List de suspensões"
+                }
+            }
+        },
+        "periodoAquisitivo": {
+            "nome": "periodoAquisitivo",
+            "descricao": "Retorna dados do período aquisitivo de férias que está sendo calculado/consultado",
+            "propriedades": {
+                "configuracaoFerias": {
+                    "tipo": "Object",
+                    "descricao": "Dados da configuração de férias do período"
+                },
+                "situacao": {
+                    "tipo": "SituacaoPeriodoAquisitivoEnum",
+                    "descricao": "Situação do período aquisitivo"
+                },
+                "dataFinal": {
+                    "tipo": "Date",
+                    "descricao": "Data final do período"
+                },
+                "dataInicial": {
+                    "tipo": "Date",
+                    "descricao": "Data inicial do período"
+                },
+                "saldo": {
+                    "tipo": "int",
+                    "descricao": "Saldo de dias para gozo"
+                },
+                "faltas": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de faltas"
+                },
+                "faltasBrutas": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de faltas brutas"
+                },
+                "diasAdquiridos": {
+                    "tipo": "int",
+                    "descricao": "Dias já adquiridos"
+                },
+                "cancelados": {
+                    "tipo": "int",
+                    "descricao": "Dias cancelados"
+                },
+                "suspensos": {
+                    "tipo": "int",
+                    "descricao": "Dias suspensos"
+                },
+                "diasFeriasPagosRescisao": {
+                    "tipo": "int",
+                    "descricao": "Dias pagos em rescisão"
+                },
+                "pagouUmTercoIntegral": {
+                    "tipo": "Boolean",
+                    "descricao": "Se já pagou um terço integral"
+                },
+                "valorCalculadoPago": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor já pago no adiantamento"
+                },
+                "valorCalculadoPagoMediaVantagem": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor pago em média/vantagem"
+                }
+            }
+        },
+        "periodoConcessao": {
+            "nome": "periodoConcessao",
+            "descricao": "Retorna dados da concessão das férias que está sendo calculada",
+            "propriedades": {
+                "diasGozo": {
+                    "tipo": "int",
+                    "descricao": "Dias de gozo de férias"
+                },
+                "diasFalta": {
+                    "tipo": "int",
+                    "descricao": "Dias de faltas"
+                },
+                "dataPagamento": {
+                    "tipo": "Date",
+                    "descricao": "Data do pagamento"
+                },
+                "dataInicioGozo": {
+                    "tipo": "Date",
+                    "descricao": "Data de início do gozo"
+                },
+                "dataFimGozo": {
+                    "tipo": "Date",
+                    "descricao": "Data fim do gozo"
+                },
+                "diasAbono": {
+                    "tipo": "int",
+                    "descricao": "Dias de abono"
+                }
+            },
+            "exemplo": {
+                "codigo": "int diasGozo = periodoConcessao.diasGozo\nDate inicioGozo = periodoConcessao.dataInicioGozo",
+                "explicacao": "Obtém dias de gozo e data de início das férias"
+            }
+        },
+        "servidor": {
+            "nome": "servidor",
+            "descricao": "Retorna os dados do servidor/pessoa",
+            "propriedades": {
+                "grauEscolaridade": {
+                    "tipo": "GrauEscolaridadeEnum",
+                    "descricao": "Grau de escolaridade do servidor"
+                },
+                "dataNascimento": {
+                    "tipo": "Date",
+                    "descricao": "Data de nascimento do servidor"
+                },
+                "estadoCivil": {
+                    "tipo": "EstadoCivilEnum",
+                    "descricao": "Estado civil do servidor"
+                },
+                "nacionalidade": {
+                    "tipo": "String",
+                    "descricao": "Nacionalidade do servidor"
+                },
+                "dataChegada": {
+                    "tipo": "Date",
+                    "descricao": "Data de chegada do servidor estrangeiro"
+                },
+                "dependentes": {
+                    "tipo": "Long",
+                    "descricao": "Quantidade geral de dependentes"
+                },
+                "sexo": {
+                    "tipo": "SexoEnum",
+                    "descricao": "Sexo do servidor"
+                },
+                "dependentesIrrf": {
+                    "tipo": "Long",
+                    "descricao": "Quantidade de dependentes de IRRF"
+                },
+                "possuiMolestiaGrave": {
+                    "tipo": "Boolean",
+                    "descricao": "Se possui moléstia grave"
+                }
+            },
+            "metodos": {
+                "buscaDependentes": {
+                    "descricao": "Retorna lista com todos os dados de dependentes",
+                    "retorno": {
+                        "tipo": "List",
+                        "descricao": "Lista de dependentes",
+                        "propriedades": [
+                            {
+                                "nome": "tipoAplicacaoDesconto",
+                                "descricao": "Tipo de aplicação de desconto"
+                            },
+                            {
+                                "nome": "valorDesconto",
+                                "descricao": "Valor de desconto"
+                            },
+                            {
+                                "nome": "percentualDesconto",
+                                "descricao": "Percentual de desconto"
+                            },
+                            {
+                                "nome": "dataInicio",
+                                "descricao": "Data de início"
+                            },
+                            {
+                                "nome": "dataTermino",
+                                "descricao": "Data término"
+                            },
+                            {
+                                "nome": "salarioFamilia",
+                                "descricao": "Se é dependente de Salário família"
+                            },
+                            {
+                                "nome": "irrf",
+                                "descricao": "Se é dependente de IRRF"
+                            }
+                        ]
+                    },
+                    "exemplo": {
+                        "codigo": "servidor.buscaDependentes().sum(0, { it.pensao ? 1 : 0 })",
+                        "explicacao": "Soma quantidade de dependentes de pensão"
+                    }
+                }
+            }
+        },
+        "valorReferencia": {
+            "nome": "valorReferencia",
+            "descricao": "É a variável responsável por registrar o valor de referência do evento. O valor final de referência deve ser atribuído a esta propriedade",
+            "tipo": "BigDecimal",
+            "exemplo": {
+                "codigo": "valorReferencia = funcionario.quantidadeHorasMes",
+                "explicacao": "Atribui quantidade de horas mensais como referência"
+            },
+            "observacoes": [
+                "Deve ser usada para armazenar valores que servem como base para cálculos",
+                "Geralmente representa quantidades ou percentuais",
+                "É exibida na coluna de referência dos relatórios"
+            ]
+        },
+        "valorCalculado": {
+            "nome": "valorCalculado",
+            "descricao": "É a variável responsável por registrar o valor para o cálculo do evento. O valor final calculado deve ser atribuído a esta propriedade",
+            "tipo": "BigDecimal",
+            "exemplo": {
+                "codigo": "vaux = Funcoes.calcprop(funcionario.salario, funcionario.quantidadeHorasMes)\nvalorCalculado = vaux",
+                "explicacao": "Calcula valor proporcional do salário e atribui ao valor calculado"
+            },
+            "observacoes": [
+                "Principal variável para armazenar resultados de cálculos",
+                "Representa valores monetários",
+                "É exibida na coluna de valor dos relatórios",
+                "Compõe bases de cálculo quando configurado"
+            ]
+        }
+    }
+}

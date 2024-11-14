@@ -1,0 +1,1 @@
+valorApurado = marcacao.totalHorasFuncao(ClassificacaoTipoFuncaoRelogio.SAIDA_SERVICO)

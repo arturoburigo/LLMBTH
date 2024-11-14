@@ -1,0 +1,521 @@
+{
+    "constantes_enums": {
+        "processamento": {
+            "TipoProcessamento": {
+                "nome": "TipoProcessamento",
+                "descricao": "Define os tipos de processamento possíveis para cálculos da folha",
+                "valores": [
+                    {
+                        "nome": "MENSAL",
+                        "descricao": "Processamento da folha mensal normal"
+                    },
+                    {
+                        "nome": "FERIAS",
+                        "descricao": "Processamento de férias"
+                    },
+                    {
+                        "nome": "DECIMO_TERCEIRO_SALARIO",
+                        "descricao": "Processamento de décimo terceiro salário"
+                    },
+                    {
+                        "nome": "RESCISAO",
+                        "descricao": "Processamento de rescisão"
+                    }
+                ],
+                "exemplo": {
+                    "codigo": "if (calculo.tipoProcessamento == TipoProcessamento.MENSAL) { /* processamento mensal */ }",
+                    "explicacao": "Verifica se é um cálculo mensal"
+                }
+            },
+            "SubTipoProcessamento": {
+                "nome": "SubTipoProcessamento",
+                "descricao": "Define os subtipos de processamento",
+                "valores": [
+                    {
+                        "nome": "INTEGRAL",
+                        "descricao": "Processamento integral/completo"
+                    },
+                    {
+                        "nome": "ADIANTAMENTO",
+                        "descricao": "Processamento de adiantamento"
+                    },
+                    {
+                        "nome": "COMPLEMENTAR",
+                        "descricao": "Processamento complementar"
+                    }
+                ]
+            },
+            "TipoRegime": {
+                "nome": "TipoRegime",
+                "descricao": "Define os tipos de regime de competência",
+                "valores": [
+                    {
+                        "nome": "CAIXA",
+                        "descricao": "Regime de caixa"
+                    },
+                    {
+                        "nome": "COMPETENCIA",
+                        "descricao": "Regime de competência"
+                    }
+                ]
+            }
+        },
+        "classificacoes": {
+            "ClassificacaoEvento": {
+                "nome": "ClassificacaoEvento",
+                "descricao": "Define as classificações possíveis para eventos",
+                "valores": [
+                    {
+                        "nome": "ABATFUNDOASSISTENCIAFER",
+                        "descricao": "Abatimento Fundo de Assistência pago em férias"
+                    },
+                    {
+                        "nome": "ABATINSSFER",
+                        "descricao": "Abatimento INSS pago em férias"
+                    },
+                    {
+                        "nome": "ABATSALM",
+                        "descricao": "Abatimento salário maternidade"
+                    },
+                    {
+                        "nome": "ABONOTERCO",
+                        "descricao": "1/3 de abono"
+                    },
+                    {
+                        "nome": "ADI13SAL",
+                        "descricao": "13º salário adiantado"
+                    }
+                ],
+                "observacoes": [
+                    "Lista contém mais de 100 classificações possíveis",
+                    "Cada classificação tem regras específicas de cálculo",
+                    "Impacta nas bases e totalizadores"
+                ]
+            },
+            "ClassificacaoTipoAfastamento": {
+                "nome": "ClassificacaoTipoAfastamento",
+                "descricao": "Define as classificações dos tipos de afastamento",
+                "valores": [
+                    {
+                        "nome": "ABORTO_NAO_CRIMINOSO",
+                        "descricao": "Afastamento por aborto não criminoso"
+                    },
+                    {
+                        "nome": "ACIDENTE_DE_TRABALHO_EMPREGADOR",
+                        "descricao": "Acidente de trabalho pago pelo empregador"
+                    },
+                    {
+                        "nome": "LICENCA_MATERNIDADE",
+                        "descricao": "Licença maternidade"
+                    },
+                    {
+                        "nome": "SERVICO_MILITAR",
+                        "descricao": "Serviço militar"
+                    }
+                ],
+                "observacoes": [
+                    "Cada classificação pode ter tratamento diferente para:",
+                    "- Contagem de tempo de serviço",
+                    "- Pagamento de benefícios",
+                    "- Impacto em férias e 13º"
+                ]
+            }
+        },
+        "tipos": {
+            "TipoEvento": {
+                "nome": "TipoEvento",
+                "descricao": "Define os tipos básicos de eventos",
+                "valores": [
+                    {
+                        "nome": "VENCIMENTO",
+                        "descricao": "Evento de vencimento (provento)"
+                    },
+                    {
+                        "nome": "DESCONTO",
+                        "descricao": "Evento de desconto"
+                    },
+                    {
+                        "nome": "INFORMATIVO_MAIS",
+                        "descricao": "Informativo positivo (não compõe líquido)"
+                    },
+                    {
+                        "nome": "INFORMATIVO_MENOS",
+                        "descricao": "Informativo negativo (não compõe líquido)"
+                    }
+                ]
+            },
+            "TipoMatricula": {
+                "nome": "TipoMatricula",
+                "descricao": "Define os tipos de matrícula possíveis",
+                "valores": [
+                    {
+                        "nome": "FUNCIONARIO",
+                        "descricao": "Matrícula de funcionário"
+                    },
+                    {
+                        "nome": "ESTAGIARIO",
+                        "descricao": "Matrícula de estagiário"
+                    },
+                    {
+                        "nome": "AUTONOMO",
+                        "descricao": "Matrícula de autônomo"
+                    },
+                    {
+                        "nome": "APOSENTADO",
+                        "descricao": "Matrícula de aposentado"
+                    },
+                    {
+                        "nome": "PENSIONISTA",
+                        "descricao": "Matrícula de pensionista"
+                    }
+                ]
+            },
+            "TipoValor": {
+                "nome": "TipoValor",
+                "descricao": "Define os tipos de valor para eventos",
+                "valores": [
+                    {
+                        "nome": "CALCULADO",
+                        "descricao": "Valor calculado do evento"
+                    },
+                    {
+                        "nome": "REFERENCIA",
+                        "descricao": "Valor de referência do evento"
+                    }
+                ]
+            }
+        },
+        "situacoes": {
+            "SituacaoPeriodoAquisitivo": {
+                "nome": "SituacaoPeriodoAquisitivo",
+                "descricao": "Define as situações possíveis para períodos aquisitivos",
+                "valores": [
+                    {
+                        "nome": "EM_ANDAMENTO",
+                        "descricao": "Período em andamento"
+                    },
+                    {
+                        "nome": "QUITADO",
+                        "descricao": "Período quitado"
+                    },
+                    {
+                        "nome": "CANCELADO",
+                        "descricao": "Período cancelado"
+                    },
+                    {
+                        "nome": "ADQUIRIDO",
+                        "descricao": "Período adquirido"
+                    },
+                    {
+                        "nome": "ANULADO",
+                        "descricao": "Período anulado"
+                    }
+                ]
+            },
+            "SituacaoPeriodoAquisitivoDecimoTerceiro": {
+                "nome": "SituacaoPeriodoAquisitivoDecimoTerceiro",
+                "descricao": "Define situações para períodos de 13º",
+                "valores": [
+                    {
+                        "nome": "ATRASADO",
+                        "descricao": "Período atrasado"
+                    },
+                    {
+                        "nome": "EM_ANDAMENTO",
+                        "descricao": "Período em andamento"
+                    },
+                    {
+                        "nome": "PERDA_DIREITO",
+                        "descricao": "Perda do direito ao período"
+                    },
+                    {
+                        "nome": "QUITADO",
+                        "descricao": "Período quitado"
+                    }
+                ]
+            }
+        },
+        "pagamento": {
+            "FormaPagamento": {
+                "nome": "FormaPagamento",
+                "descricao": "Define as formas de pagamento possíveis",
+                "valores": [
+                    {
+                        "nome": "DINHEIRO",
+                        "descricao": "Pagamento em dinheiro"
+                    },
+                    {
+                        "nome": "CHEQUE",
+                        "descricao": "Pagamento em cheque"
+                    },
+                    {
+                        "nome": "CREDITO_EM_CONTA",
+                        "descricao": "Crédito em conta bancária"
+                    }
+                ],
+                "exemplo": {
+                    "codigo": "if (funcionario.formaPagamento == FormaPagamento.CREDITO_EM_CONTA) { /* processamento específico */ }",
+                    "explicacao": "Verifica se pagamento é via crédito em conta"
+                }
+            },
+            "UnidadeCalculo": {
+                "nome": "UnidadeCalculo",
+                "descricao": "Define as unidades possíveis para cálculos",
+                "valores": [
+                    {
+                        "nome": "DIAS",
+                        "descricao": "Cálculo baseado em dias"
+                    },
+                    {
+                        "nome": "HORAS",
+                        "descricao": "Cálculo baseado em horas"
+                    }
+                ]
+            },
+            "UnidadeEvento": {
+                "nome": "UnidadeEvento",
+                "descricao": "Define as unidades possíveis para eventos",
+                "valores": [
+                    {
+                        "nome": "AUTOMATICO",
+                        "descricao": "Unidade definida automaticamente"
+                    },
+                    {
+                        "nome": "AVOS",
+                        "descricao": "Baseado em avos"
+                    },
+                    {
+                        "nome": "DIAS",
+                        "descricao": "Baseado em dias"
+                    },
+                    {
+                        "nome": "HORAS",
+                        "descricao": "Baseado em horas"
+                    },
+                    {
+                        "nome": "PERCENTUAL",
+                        "descricao": "Baseado em percentual"
+                    },
+                    {
+                        "nome": "QUANTIDADE",
+                        "descricao": "Baseado em quantidade"
+                    },
+                    {
+                        "nome": "VALOR",
+                        "descricao": "Baseado em valor fixo"
+                    }
+                ]
+            },
+            "TipoRetornoValeTransporte": {
+                "nome": "TipoRetornoValeTransporte",
+                "descricao": "Define os tipos de retorno para vale transporte",
+                "valores": [
+                    {
+                        "nome": "QUANTIDADE",
+                        "descricao": "Retorna quantidade de vales"
+                    },
+                    {
+                        "nome": "VALOR",
+                        "descricao": "Retorna valor total"
+                    }
+                ]
+            }
+        },
+        "pessoa": {
+            "Sexo": {
+                "nome": "Sexo",
+                "descricao": "Define os sexos possíveis",
+                "valores": [
+                    {
+                        "nome": "MASCULINO",
+                        "descricao": "Sexo masculino"
+                    },
+                    {
+                        "nome": "FEMININO",
+                        "descricao": "Sexo feminino"
+                    }
+                ]
+            },
+            "EstadoCivil": {
+                "nome": "EstadoCivil",
+                "descricao": "Define os estados civis possíveis",
+                "valores": [
+                    {
+                        "nome": "SOLTEIRO",
+                        "descricao": "Solteiro(a)"
+                    },
+                    {
+                        "nome": "CASADO",
+                        "descricao": "Casado(a)"
+                    },
+                    {
+                        "nome": "DIVORCIADO",
+                        "descricao": "Divorciado(a)"
+                    },
+                    {
+                        "nome": "VIUVO",
+                        "descricao": "Viúvo(a)"
+                    },
+                    {
+                        "nome": "SEPARADO_CONSENSUALMENTE",
+                        "descricao": "Separado(a) consensualmente"
+                    },
+                    {
+                        "nome": "SEPARADO_JUDICIALMENTE",
+                        "descricao": "Separado(a) judicialmente"
+                    },
+                    {
+                        "nome": "UNIAO_ESTAVEL",
+                        "descricao": "União estável"
+                    }
+                ]
+            },
+            "GrauDeficiencia": {
+                "nome": "GrauDeficiencia",
+                "descricao": "Define os graus de deficiência",
+                "valores": [
+                    {
+                        "nome": "PARCIAL",
+                        "descricao": "Deficiência parcial"
+                    },
+                    {
+                        "nome": "TOTAL",
+                        "descricao": "Deficiência total"
+                    },
+                    {
+                        "nome": "NAOINVALIDO",
+                        "descricao": "Não possui invalidez"
+                    }
+                ]
+            },
+            "TipoAplicacaoDesconto": {
+                "nome": "TipoAplicacaoDesconto",
+                "descricao": "Define tipos de aplicação de desconto para pensões",
+                "valores": [
+                    {
+                        "nome": "VALOR",
+                        "descricao": "Desconto por valor fixo"
+                    },
+                    {
+                        "nome": "PERCENTUAL",
+                        "descricao": "Desconto por percentual"
+                    }
+                ]
+            }
+        },
+        "vinculo": {
+            "TipoVinculo": {
+                "nome": "TipoVinculo",
+                "descricao": "Define os tipos de vínculo empregatício",
+                "valores": [
+                    {
+                        "nome": "CELETISTA",
+                        "descricao": "Vínculo CLT"
+                    },
+                    {
+                        "nome": "ESTATUTARIO",
+                        "descricao": "Vínculo estatutário"
+                    },
+                    {
+                        "nome": "OUTROS",
+                        "descricao": "Outros tipos de vínculo"
+                    }
+                ]
+            },
+            "OcorrenciaSefip": {
+                "nome": "OcorrenciaSefip",
+                "descricao": "Define as ocorrências possíveis para SEFIP",
+                "valores": [
+                    {
+                        "nome": "NUNCA_EXPOSTO_AGENTES_NOCIVOS",
+                        "descricao": "Nunca exposto a agentes nocivos"
+                    },
+                    {
+                        "nome": "EXPOSTO_ALGUMA_VEZ",
+                        "descricao": "Já exposto alguma vez"
+                    },
+                    {
+                        "nome": "EXPOSTO_APOSENTADORIA_15_ANOS",
+                        "descricao": "Exposto - aposentadoria 15 anos"
+                    },
+                    {
+                        "nome": "EXPOSTO_APOSENTADORIA_20_ANOS",
+                        "descricao": "Exposto - aposentadoria 20 anos"
+                    },
+                    {
+                        "nome": "EXPOSTO_APOSENTADORIA_25_ANOS",
+                        "descricao": "Exposto - aposentadoria 25 anos"
+                    }
+                ]
+            },
+            "ResponsabilidadePagamento": {
+                "nome": "ResponsabilidadePagamento",
+                "descricao": "Define responsabilidades pelo pagamento em cedências",
+                "valores": [
+                    {
+                        "nome": "PAGAMENTO_EXCLUSIVAMENTE_PELO_CEDENTE_ORIGEM",
+                        "descricao": "Pago exclusivamente pelo cedente"
+                    },
+                    {
+                        "nome": "PAGAMENTO_EXCLUSIVAMENTE_PELO_CESSIONARIO_DESTINO",
+                        "descricao": "Pago exclusivamente pelo cessionário"
+                    },
+                    {
+                        "nome": "PAGAMENTO_PELO_CEDENTE_ORIGEM_E_PELO_CESSIONARIO_DESTINO",
+                        "descricao": "Pago por ambos"
+                    },
+                    {
+                        "nome": "PAGAMENTO_PELO_CEDENTE_ORIGEM_COM_RESSARCIMENTO_PELO_CESSIONARIO_DESTINO",
+                        "descricao": "Pago pelo cedente com ressarcimento"
+                    }
+                ]
+            }
+        },
+        "outros": {
+            "TipoAvisoPrevio": {
+                "nome": "TipoAvisoPrevio",
+                "descricao": "Define os tipos de aviso prévio",
+                "valores": [
+                    {
+                        "nome": "TRABALHADO_REDUCAO_2_HORAS_DIARIAS",
+                        "descricao": "Trabalhado com redução 2h diárias"
+                    },
+                    {
+                        "nome": "TRABALHADO_REDUCAO_7_DIAS_CORRIDOS",
+                        "descricao": "Trabalhado com redução 7 dias"
+                    },
+                    {
+                        "nome": "INDENIZADO",
+                        "descricao": "Aviso prévio indenizado"
+                    },
+                    {
+                        "nome": "TRABALHADO",
+                        "descricao": "Aviso prévio trabalhado"
+                    },
+                    {
+                        "nome": "DESCONTADO",
+                        "descricao": "Aviso prévio descontado"
+                    }
+                ]
+            },
+            "TipoDespesaPlanoSaude": {
+                "nome": "TipoDespesaPlanoSaude",
+                "descricao": "Define tipos de despesa com plano de saúde",
+                "valores": [
+                    {
+                        "nome": "MENSALIDADE",
+                        "descricao": "Mensalidade do plano"
+                    },
+                    {
+                        "nome": "ADESAO",
+                        "descricao": "Taxa de adesão"
+                    },
+                    {
+                        "nome": "PROCEDIMENTOS",
+                        "descricao": "Procedimentos médicos"
+                    }
+                ]
+            }
+        }
+    }
+}

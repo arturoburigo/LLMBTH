@@ -1,0 +1,2 @@
+//TODO
+valorApurado = 0

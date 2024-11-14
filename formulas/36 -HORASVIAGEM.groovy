@@ -1,0 +1,1 @@
+valorApurado = ausencia.totalAusencia(ClassificacaoTipoAusencia.VIAGEM_TRABALHO)

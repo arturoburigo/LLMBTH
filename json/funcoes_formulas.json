@@ -1,0 +1,811 @@
+{
+    "funcoes_formulas": {
+        "funcoes_acumulacao": {
+            "acumula": {
+                "nome": "acumula",
+                "descricao": "Acumula a movimentação de um determinado evento no período informado",
+                "parametros": [
+                    {
+                        "nome": "codigoEvento",
+                        "tipo": "Long",
+                        "obrigatorio": true,
+                        "descricao": "Código do evento"
+                    },
+                    {
+                        "nome": "tipo",
+                        "tipo": "TipoValorEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo de valor a ser buscado"
+                    },
+                    {
+                        "nome": "competenciaInicial",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Competência inicial"
+                    },
+                    {
+                        "nome": "competenciaFinal",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Competência final"
+                    },
+                    {
+                        "nome": "tipoProcessamento",
+                        "tipo": "TipoProcessamentoEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo de processamento"
+                    },
+                    {
+                        "nome": "subTipoProcessamento",
+                        "tipo": "SubTipoProcessamentoEnum",
+                        "obrigatorio": false,
+                        "descricao": "Subtipo de processamento"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor acumulado no período"
+                },
+                "exemplo": {
+                    "codigo": "valorAcumulado = Funcoes.acumula(67, TipoValor.CALCULADO, competencia, competencia, TipoProcessamento.MENSAL, SubTipoProcessamento.ADIANTAMENTO)",
+                    "explicacao": "Acumula valores calculados do evento 67 na competência"
+                }
+            },
+            "acumulaClassificacao": {
+                "nome": "acumulaClassificacao",
+                "descricao": "Acumula a movimentação dos eventos que tenham a classificação informada",
+                "parametros": [
+                    {
+                        "nome": "classificacao",
+                        "tipo": "ClassificacaoEventoEnum",
+                        "obrigatorio": true,
+                        "descricao": "Classificação do evento"
+                    },
+                    {
+                        "nome": "tipo",
+                        "tipo": "TipoValorEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo de valor a ser buscado"
+                    },
+                    {
+                        "nome": "competenciaInicial",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Competência inicial"
+                    },
+                    {
+                        "nome": "competenciaFinal",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Competência final"
+                    },
+                    {
+                        "nome": "tipoProcessamento",
+                        "tipo": "TipoProcessamentoEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo de processamento"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor acumulado no período"
+                }
+            }
+        },
+        "funcoes_afastamento": {
+            "afasaborto": {
+                "nome": "afasaborto",
+                "descricao": "Retorna os dias com afastamento na competência devido aborto não criminoso",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias de afastamento"
+                },
+                "exemplo": {
+                    "codigo": "int diasAfastamento = Funcoes.afasaborto()\nvaux = Funcoes.cnvdpbase(diasAfastamento)\nvalorCalculado = Funcoes.calcprop(funcionario.salario, vaux)",
+                    "explicacao": "Calcula valor proporcional considerando dias de afastamento por aborto"
+                }
+            },
+            "afasacidtrab": {
+                "nome": "afasacidtrab",
+                "descricao": "Retorna os dias com afastamento na competência devido acidente de trabalho (previdência)",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias de afastamento"
+                }
+            },
+            "afasacidtrabemp": {
+                "nome": "afasacidtrabemp",
+                "descricao": "Retorna os dias com afastamento na competência devido acidente de trabalho (empregador)",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias de afastamento"
+                }
+            },
+            "afasadocao": {
+                "nome": "afasadocao",
+                "descricao": "Retorna os dias com afastamento na competência devido adoção",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias de afastamento"
+                }
+            },
+            "afasauxdoenc": {
+                "nome": "afasauxdoenc",
+                "descricao": "Retorna os dias com afastamento na competência devido doença (previdência)",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias de afastamento"
+                }
+            },
+            "afasauxdoencemp": {
+                "nome": "afasauxdoencemp",
+                "descricao": "Retorna os dias com afastamento na competência devido doença (empregador)",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias de afastamento"
+                }
+            }
+        },
+        "funcoes_avos": {
+            "avos13": {
+                "nome": "avos13",
+                "descricao": "Calcula quantidade de avos para décimo terceiro salário",
+                "parametros": [
+                    {
+                        "nome": "mes",
+                        "tipo": "int",
+                        "obrigatorio": true,
+                        "descricao": "Mês de referência"
+                    },
+                    {
+                        "nome": "calculoFGTS",
+                        "tipo": "boolean",
+                        "obrigatorio": false,
+                        "descricao": "Se deve considerar cálculo para FGTS"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de avos"
+                },
+                "exemplo": {
+                    "codigo": "int avos13 = Funcoes.avos13(12, true)",
+                    "explicacao": "Calcula avos de 13º até dezembro considerando FGTS"
+                }
+            },
+            "avosAuxMat13": {
+                "nome": "avosAuxMat13",
+                "descricao": "Calcula quantidade de avos afastados por auxílio maternidade para 13º",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de avos de auxílio maternidade"
+                }
+            }
+        },
+        "funcoes_busca": {
+            "buscaAbonos": {
+                "nome": "buscaAbonos",
+                "descricao": "Retorna quantidade de abonos de faltas na competência",
+                "parametros": [
+                    {
+                        "nome": "abonada",
+                        "tipo": "TipoAbonoEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo de abono para busca"
+                    },
+                    {
+                        "nome": "competencia",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Competência para busca"
+                    },
+                    {
+                        "nome": "considerarJustificadasInjustificadas",
+                        "tipo": "TipoFaltaEnum",
+                        "obrigatorio": false,
+                        "descricao": "Tipo de falta a considerar"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "double",
+                    "descricao": "Quantidade de abonos"
+                },
+                "exemplo": {
+                    "codigo": "double abonoFaltas = Funcoes.buscaAbonos(TipoAbono.ABONADO, calculo.competencia, TipoFalta.NAO_JUSTIFICADA)",
+                    "explicacao": "Busca quantidade de abonos de faltas não justificadas na competência"
+                }
+            },
+            "buscaFaltas": {
+                "nome": "buscaFaltas",
+                "descricao": "Retorna quantidade de faltas na competência",
+                "parametros": [
+                    {
+                        "nome": "justificada",
+                        "tipo": "TipoFaltaEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo de falta"
+                    },
+                    {
+                        "nome": "competencia",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Competência para busca"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "double",
+                    "descricao": "Quantidade de faltas"
+                }
+            },
+            "buscaMes": {
+                "nome": "buscaMes",
+                "descricao": "Retorna o nome do mês em português",
+                "parametros": [
+                    {
+                        "nome": "mes",
+                        "tipo": "int",
+                        "obrigatorio": true,
+                        "descricao": "Número do mês (1-12)"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "String",
+                    "descricao": "Nome do mês em maiúsculas"
+                }
+            }
+        },
+        "funcoes_calculo": {
+            "calcprop": {
+                "nome": "calcprop",
+                "descricao": "Calcula valor proporcional ao número de dias ou horas",
+                "parametros": [
+                    {
+                        "nome": "vlrCalc",
+                        "tipo": "BigDecimal",
+                        "obrigatorio": true,
+                        "descricao": "Valor base para cálculo"
+                    },
+                    {
+                        "nome": "proporcional",
+                        "tipo": "BigDecimal",
+                        "obrigatorio": true,
+                        "descricao": "Quantidade de dias/horas para proporção"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor proporcional calculado"
+                },
+                "exemplo": {
+                    "codigo": "valorCalculado = Funcoes.calcprop(funcionario.salario, Funcoes.cnvdpbase(Funcoes.diastrab()))",
+                    "explicacao": "Calcula valor proporcional do salário aos dias trabalhados"
+                }
+            },
+            "cnvdpbase": {
+                "nome": "cnvdpbase",
+                "descricao": "Converte dias para a unidade de cálculo configurada",
+                "parametros": [
+                    {
+                        "nome": "dias",
+                        "tipo": "int",
+                        "obrigatorio": true,
+                        "descricao": "Quantidade de dias"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "double",
+                    "descricao": "Valor convertido para unidade base"
+                }
+            },
+            "carregaEmprestimoEmFerias": {
+                "nome": "carregaEmprestimoEmFerias",
+                "descricao": "Registra valores de empréstimo nas folhas de férias",
+                "parametros": [
+                    {
+                        "nome": "considerarApenasFeriasComGozo",
+                        "tipo": "boolean",
+                        "obrigatorio": true,
+                        "descricao": "Se considera apenas férias com gozo"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "void",
+                    "descricao": "Não possui retorno"
+                }
+            }
+        },
+        "funcoes_dias": {
+            "diasuteis": {
+                "nome": "diasuteis",
+                "descricao": "Retorna o número de dias úteis de um determinado período, podendo considerar sábados",
+                "parametros": [
+                    {
+                        "nome": "dataInicial",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data inicial do período"
+                    },
+                    {
+                        "nome": "dataFinal",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data final do período"
+                    },
+                    {
+                        "nome": "sabadoutil",
+                        "tipo": "boolean",
+                        "obrigatorio": true,
+                        "descricao": "Se considera sábado como dia útil"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias úteis"
+                },
+                "exemplo": {
+                    "codigo": "int diasUteis = Funcoes.diasuteis(Datas.data(2021,1,1), Datas.data(2021,1,31), false)",
+                    "explicacao": "Calcula dias úteis de janeiro/2021 sem considerar sábados"
+                }
+            },
+            "diasafast": {
+                "nome": "diasafast",
+                "descricao": "Busca número de dias afastados em um período",
+                "parametros": [
+                    {
+                        "nome": "dataInicial",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data inicial"
+                    },
+                    {
+                        "nome": "dataFinal",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data final"
+                    },
+                    {
+                        "nome": "classificacoes",
+                        "tipo": "List<ClassificacaoTipoAfastamento>",
+                        "obrigatorio": true,
+                        "descricao": "Lista de classificações de afastamento"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias afastados"
+                }
+            },
+            "diasuteisafast": {
+                "nome": "diasuteisafast",
+                "descricao": "Retorna dias úteis afastados em um período",
+                "parametros": [
+                    {
+                        "nome": "dataInicial",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data inicial"
+                    },
+                    {
+                        "nome": "dataFinal",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data final"
+                    },
+                    {
+                        "nome": "sabadoutil",
+                        "tipo": "boolean",
+                        "obrigatorio": true,
+                        "descricao": "Se considera sábado útil"
+                    },
+                    {
+                        "nome": "classificacaoAfastamentos",
+                        "tipo": "List",
+                        "obrigatorio": true,
+                        "descricao": "Lista de classificações"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias úteis afastados"
+                }
+            },
+            "diastrab": {
+                "nome": "diastrab",
+                "descricao": "Retorna os dias trabalhados na competência",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias trabalhados"
+                },
+                "exemplo": {
+                    "codigo": "int diasTrabalhados = Funcoes.diastrab()\nvalorCalculado = Funcoes.calcprop(funcionario.salario, diasTrabalhados)",
+                    "explicacao": "Calcula valor proporcional aos dias trabalhados"
+                }
+            },
+            "diasferias": {
+                "nome": "diasferias",
+                "descricao": "Retorna os dias de férias na competência",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias de férias"
+                }
+            }
+        },
+        "funcoes_datas": {
+            "inicioCompetencia": {
+                "nome": "inicioCompetencia",
+                "descricao": "Retorna data referente ao primeiro dia da competência",
+                "retorno": {
+                    "tipo": "Date",
+                    "descricao": "Primeiro dia da competência"
+                },
+                "exemplo": {
+                    "codigo": "Date inicioComp = Funcoes.inicioCompetencia()",
+                    "explicacao": "Obtém primeiro dia da competência atual"
+                }
+            },
+            "fimCompetencia": {
+                "nome": "fimCompetencia",
+                "descricao": "Retorna data referente ao último dia da competência",
+                "retorno": {
+                    "tipo": "Date",
+                    "descricao": "Último dia da competência"
+                }
+            },
+            "primeiroDia": {
+                "nome": "primeiroDia",
+                "descricao": "Retorna a data referente ao primeiro dia de uma competência",
+                "parametros": [
+                    {
+                        "nome": "data",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data de referência"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "Date",
+                    "descricao": "Primeiro dia do mês"
+                }
+            },
+            "idade": {
+                "nome": "idade",
+                "descricao": "Retorna a idade comparando a diferença entre duas datas",
+                "parametros": [
+                    {
+                        "nome": "menorData",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data inicial (nascimento)"
+                    },
+                    {
+                        "nome": "maiorData",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data final (atual)"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Idade em anos"
+                },
+                "exemplo": {
+                    "codigo": "int idade = Funcoes.idade(servidor.dataNascimento, Datas.hoje())",
+                    "explicacao": "Calcula idade atual do servidor"
+                }
+            }
+        },
+        "funcoes_verificacao": {
+            "recebeDecimoTerceiro": {
+                "nome": "recebeDecimoTerceiro",
+                "descricao": "Verifica se a matrícula recebe décimo terceiro salário",
+                "parametros": [
+                    {
+                        "nome": "tipoMatricula",
+                        "tipo": "TipoMatriculaEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo da matrícula"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "boolean",
+                    "descricao": "true se recebe 13º, false caso contrário"
+                },
+                "exemplo": {
+                    "codigo": "Boolean recebe13 = Funcoes.recebeDecimoTerceiro(matricula.tipo)",
+                    "explicacao": "Verifica se matrícula tem direito a 13º salário"
+                }
+            },
+            "possuiPrevidencia": {
+                "nome": "possuiPrevidencia",
+                "descricao": "Verifica se a matrícula possui o tipo de previdência informado",
+                "parametros": [
+                    {
+                        "nome": "tipoPrevidencia",
+                        "tipo": "TipoPrevidenciaEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo de previdência a verificar"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "boolean",
+                    "descricao": "true se possui a previdência, false caso contrário"
+                }
+            },
+            "possuiPrevidenciaFederal": {
+                "nome": "possuiPrevidenciaFederal",
+                "descricao": "Verifica se a matrícula possui previdência federal",
+                "parametros": [
+                    {
+                        "nome": "tipoMatricula",
+                        "tipo": "TipoMatriculaEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo da matrícula"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "boolean",
+                    "descricao": "true se possui previdência federal, false caso contrário"
+                }
+            },
+            "pagapensao": {
+                "nome": "pagapensao",
+                "descricao": "Indica se o servidor possui dependentes de pensão vigentes",
+                "retorno": {
+                    "tipo": "boolean",
+                    "descricao": "true se possui pensionistas, false caso contrário"
+                }
+            }
+        },
+        "funcoes_remuneracao": {
+            "remuneracao": {
+                "nome": "remuneracao",
+                "descricao": "Retorna dados de remuneração da matrícula independente do tipo",
+                "parametros": [
+                    {
+                        "nome": "tipo",
+                        "tipo": "TipoMatriculaEnum",
+                        "obrigatorio": true,
+                        "descricao": "Tipo da matrícula"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "Object",
+                    "descricao": "Objeto com dados de remuneração",
+                    "propriedades": {
+                        "valor": "Valor da remuneração",
+                        "quantidadeHorasMes": "Quantidade de horas mensais",
+                        "unidade": "Unidade de pagamento"
+                    }
+                },
+                "exemplo": {
+                    "codigo": "Object remuneracao = Funcoes.remuneracao(matricula.tipo)\nBigDecimal valor = remuneracao.valor\nBigDecimal horasMes = remuneracao.quantidadeHorasMes",
+                    "explicacao": "Obtém dados de remuneração da matrícula"
+                }
+            },
+            "getValorBaseMultiplosVinculos": {
+                "nome": "getValorBaseMultiplosVinculos",
+                "descricao": "Busca valor de base para vínculos múltiplos",
+                "retorno": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor da base"
+                }
+            },
+            "getValorEvento13SalarioIntegralAdiantado": {
+                "nome": "getValorEvento13SalarioIntegralAdiantado",
+                "descricao": "Busca valor de 13º adiantado em competência anterior",
+                "parametros": [
+                    {
+                        "nome": "codigoEvento",
+                        "tipo": "Long",
+                        "obrigatorio": false,
+                        "descricao": "Código do evento específico"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "BigDecimal",
+                    "descricao": "Valor do 13º adiantado"
+                }
+            }
+        },
+        "funcoes_replicacao": {
+            "replicaEventoVariavel": {
+                "nome": "replicaEventoVariavel",
+                "descricao": "Replica eventos lançados em variáveis entre processamentos",
+                "parametros": [
+                    {
+                        "nome": "codigoEvento",
+                        "tipo": "Long",
+                        "obrigatorio": true,
+                        "descricao": "Código do evento"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "Object",
+                    "propriedades": {
+                        "valor": "Valor calculado",
+                        "referencia": "Valor de referência"
+                    }
+                }
+            },
+            "replicaFeriasNaFolhaMensal": {
+                "nome": "replicaFeriasNaFolhaMensal",
+                "descricao": "Replica eventos de férias para o processamento mensal",
+                "parametros": [
+                    {
+                        "nome": "codigoEvento",
+                        "tipo": "Long",
+                        "obrigatorio": true,
+                        "descricao": "Código do evento"
+                    },
+                    {
+                        "nome": "listaComposicaoBasesValorCalculado",
+                        "tipo": "List",
+                        "obrigatorio": false,
+                        "descricao": "Bases para incidência do valor calculado"
+                    },
+                    {
+                        "nome": "listaComposicaoBasesValorReferencia",
+                        "tipo": "List",
+                        "obrigatorio": false,
+                        "descricao": "Bases para incidência do valor referência"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "Object",
+                    "propriedades": {
+                        "valor": "Valor calculado",
+                        "referencia": "Valor de referência"
+                    }
+                }
+            }
+        },
+        "funcoes_validacao": {
+            "permitecalc13integral": {
+                "nome": "permitecalc13integral",
+                "descricao": "Indica se pode ser realizado o cálculo de décimo terceiro salário integral",
+                "retorno": {
+                    "tipo": "boolean",
+                    "descricao": "true se permite cálculo integral, false caso contrário"
+                },
+                "exemplo": {
+                    "codigo": "if (!Funcoes.permitecalc13integral()) { suspender \"Não é possível calcular 13º integral\" }",
+                    "explicacao": "Verifica se pode calcular 13º integral antes de prosseguir"
+                }
+            },
+            "permiteCalculoAuxilioMaternidade": {
+                "nome": "permiteCalculoAuxilioMaternidade",
+                "descricao": "Indica se um cálculo de auxílio maternidade pode ser realizado",
+                "retorno": {
+                    "tipo": "boolean",
+                    "descricao": "true se permite auxílio maternidade, false caso contrário"
+                }
+            },
+            "quantPrevidenciasAtivas": {
+                "nome": "quantPrevidenciasAtivas",
+                "descricao": "Retorna a quantidade de previdências ativas na matrícula",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de previdências ativas"
+                }
+            }
+        },
+        "funcoes_especificas": {
+            "somenteAposentadosPensionistas": {
+                "nome": "somenteAposentadosPensionistas",
+                "descricao": "Suspende o cálculo caso a matrícula não seja aposentado ou pensionista",
+                "retorno": {
+                    "tipo": "void",
+                    "descricao": "Suspende o cálculo se necessário"
+                },
+                "exemplo": {
+                    "codigo": "Funcoes.somenteAposentadosPensionistas()",
+                    "explicacao": "Garante que o cálculo só prossegue para aposentados/pensionistas"
+                }
+            },
+            "somenteFuncionarios": {
+                "nome": "somenteFuncionarios",
+                "descricao": "Suspende o cálculo caso a matrícula não seja do tipo funcionário",
+                "retorno": {
+                    "tipo": "void",
+                    "descricao": "Suspende o cálculo se necessário"
+                }
+            }
+        },
+        "funcoes_medias_vantagens": {
+            "getTotalFerias": {
+                "nome": "getTotalFerias",
+                "descricao": "Retorna o total da folha de férias, desconsiderando INSS/RPPS e IRRF",
+                "retorno": {
+                    "tipo": "Object",
+                    "propriedades": {
+                        "provento": "Total de proventos",
+                        "desconto": "Total de descontos",
+                        "liquido": "Valor líquido"
+                    }
+                }
+            },
+            "getValorClassifEventoFerias": {
+                "nome": "getValorClassifEventoFerias",
+                "descricao": "Retorna valor total ou proporcional da classificação do evento",
+                "parametros": [
+                    {
+                        "nome": "classificacaoEvento",
+                        "tipo": "ClassificacaoEventoEnum",
+                        "obrigatorio": true,
+                        "descricao": "Classificação do evento"
+                    },
+                    {
+                        "nome": "buscarValorIntegral",
+                        "tipo": "boolean",
+                        "obrigatorio": false,
+                        "descricao": "Se deve buscar valor integral"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "Object",
+                    "propriedades": {
+                        "valor": "Valor calculado",
+                        "referencia": "Valor de referência"
+                    }
+                }
+            },
+            "getValorFeriasEventoVariavel": {
+                "nome": "getValorFeriasEventoVariavel",
+                "descricao": "Retorna valor de evento da folha de férias",
+                "parametros": [
+                    {
+                        "nome": "codigoEvento",
+                        "tipo": "Long",
+                        "obrigatorio": true,
+                        "descricao": "Código do evento"
+                    },
+                    {
+                        "nome": "somarReferencias",
+                        "tipo": "boolean",
+                        "obrigatorio": false,
+                        "descricao": "Se deve somar referências de eventos iguais"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "Object",
+                    "propriedades": {
+                        "valor": "Valor calculado",
+                        "referencia": "Valor de referência"
+                    }
+                }
+            }
+        },
+        "funcoes_utilitarias": {
+            "codigoMatricula": {
+                "nome": "codigoMatricula",
+                "descricao": "Busca o código da matrícula com contrato que está sendo calculada",
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Código da matrícula sem a barra do contrato"
+                }
+            },
+            "concessaoFeriasCompetencia": {
+                "nome": "concessaoFeriasCompetencia",
+                "descricao": "Busca quantidade de dias do gozo de férias entre datas",
+                "parametros": [
+                    {
+                        "nome": "dataInicioGozo",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data inicial do gozo"
+                    },
+                    {
+                        "nome": "dataFimGozo",
+                        "tipo": "Date",
+                        "obrigatorio": true,
+                        "descricao": "Data final do gozo"
+                    }
+                ],
+                "retorno": {
+                    "tipo": "int",
+                    "descricao": "Quantidade de dias de gozo"
+                }
+            }
+        }
+    }
+}
