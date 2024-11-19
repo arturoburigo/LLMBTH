@@ -1,0 +1,2 @@
+nao quero que tu me explique o codigo, quero que tu me explique oq o codigo esta fazendo
+quero que voce lembre que vvar é variavel, e toda vez q ele aparecer voce vai dizer caso o evento ja tenha sido lancado em variavel
